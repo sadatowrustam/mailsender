@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Projects } from "./Projects";
 
 @Entity({name:"users"})
 export class Users{
@@ -9,8 +10,12 @@ export class Users{
     username:string
     @Column()
     password:string
-    @Column()
+    @Column({nullable:true})
     phone_number:string
     @Column()
     isActive:boolean
+    @OneToMany(()=>Projects,(projects)=>projects.user)
+    projects:Projects[]
+    @Column({default:new Date()})
+    createdAt:Date
 }

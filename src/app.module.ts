@@ -6,6 +6,9 @@ import { Admin } from './models/Admin';
 import { ProjectsModule } from './projects/projects.module';
 import { Projects } from './models/Projects';
 import { Users } from './models/User';
+import { Phones } from './models/Phones';
+
+import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -16,11 +19,12 @@ import { Users } from './models/User';
       password: 'kuwat2009',
       database: 'mailsender',
       synchronize: true,
-      entities: [Admin, Projects, Users],
+      entities: [Admin, Projects, Users, Phones],
     }),
     AdminModule,
     ConfigModule.forRoot({ isGlobal: true }),
     ProjectsModule,
+    UsersModule,
   ],
 })
 export class AppModule {}
