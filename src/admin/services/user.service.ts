@@ -41,7 +41,7 @@ export class UserService {
       return saved_user
     }
     async getUser(id:number){
-        const user=await this.userModel.findOneBy({id})
+        const user=await this.userModel.findOne({where:{id},relations:["projects"]})
         if(!user)
             throw new NotFoundException("User not found")
         return user

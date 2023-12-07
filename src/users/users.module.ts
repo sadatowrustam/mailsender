@@ -10,12 +10,16 @@ import { JwtStrategy } from './strategy';
 import { ProjectsService } from './services/project.service';
 import { ProjectsController } from './controllers/projects.controller';
 import { Projects } from 'src/models/Projects';
+import { Phones } from 'src/models/Phones';
+import { TemplatesService } from './services/template.service';
+import { TemplateController } from './controllers/templates.controller';
+import { Templates } from 'src/models/Templates';
 
 @Module({
-  controllers: [UsersController,ProjectsController],
-  providers: [UsersService,JwtStrategy,ProjectsService],
+  controllers: [UsersController,ProjectsController,TemplateController],
+  providers: [UsersService,JwtStrategy,ProjectsService,TemplatesService],
   imports:[
-    TypeOrmModule.forFeature([Users,Projects]),
+    TypeOrmModule.forFeature([Users,Projects,Phones,Templates]),
     JwtModule.register({}),
     ConfigModule,
   ]

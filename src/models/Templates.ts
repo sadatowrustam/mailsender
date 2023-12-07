@@ -1,16 +1,19 @@
 /* eslint-disable prettier/prettier */
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn,ManyToOne } from "typeorm";
+import { Users } from "./User";
 
 @Entity({name:"templates"})
-export class Projects{
+export class Templates{
     @PrimaryGeneratedColumn()
     id:number
     @Column()
     name:string
-    @Column()
+    @Column({nullable:true})
     type:string
-    @Column()
-    template:Text
+    @Column({nullable:true})
+    template:string
+    @ManyToOne(()=>Users,(users)=>users.templates)
+    user:Users
     @Column()
     createdAt:Date
     @Column({default:new Date()})

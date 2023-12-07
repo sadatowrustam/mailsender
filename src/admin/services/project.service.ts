@@ -6,7 +6,6 @@ import { Users } from 'src/models/User';
 import { Phones } from 'src/models/Phones';
 import * as randomstring from "randomstring"
 import { Repository } from 'typeorm';
-import * as uuid from "uuid"
 // import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -17,20 +16,13 @@ export class ProjectsService {
     @InjectRepository(Phones) private deviceModel:Repository<Phones>
 
     ) {}
-  async createProject(body:any,user:any){
-    const new_project=await this.projectModel.create({...body,createdAt:new Date(),user,index:uuid.v4()});
-    await this.projectModel.save(new_project)
-    return new_project;
-  }
-  async getProjects(userId:number){
-    const userWithProjects = await this.projectModel.find({where:{user:{id:userId}}})
-    // Access the projects associated with the user
-    return userWithProjects
+  async getProjects(){
+    const projects = await this.projectModel.find()
+    return projects
   }
   async getOneProject(id:number){
     const one_project = await this.projectModel.find({relations:["devices"],where:{id}})
     if(!one_project) throw new NotFoundException("Project not found")
-    // Access the projects associated with the use
     return one_project
   }
   async editProject(id:number,body:any){

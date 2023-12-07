@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { JwtGuard } from '../guard';
-import { GetUser } from 'src/admin/decorator';
 import { ProjectsService } from '../services/project.service';
 
 @Controller('users/projects')
@@ -9,12 +8,9 @@ import { ProjectsService } from '../services/project.service';
 export class ProjectsController {
     constructor(private projectService:ProjectsService){}
     @Post()
-    createProject(@Body() body:any,@GetUser("id") user:any){
-        return this.projectService.createProject(body,user)
-    }
     @Get()
-    getProjects(@GetUser() user:any){
-        return this.projectService.getProjects(user.id)
+    getProjects(){
+        return this.projectService.getProjects()
     }
     @Get(":id")
     getOneProject(@Param("id",ParseIntPipe) id:number){

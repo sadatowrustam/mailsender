@@ -9,6 +9,8 @@ export class Projects{
     @Column()
     name:string
     @Column()
+    index:string
+    @Column()
     type:string
     @Column()
     template:string
@@ -26,6 +28,10 @@ export class Projects{
     devices:Phones[]
     @Column({nullable:true})
     status:string
+    @Column({nullable:true})
+    email:string
+    @Column({nullable:true})
+    email_password:string
     @Column()
     createdAt:Date
     @Column({default:new Date()})
