@@ -42,9 +42,9 @@ export class ProjectsService {
   async addDevice(id:number,body:any){
     console.log("men barde")
     const index=randomstring.generate({length:6})
-    const one_project = await this.projectModel.find({where:{id}})
+    const one_project = await this.projectModel.findOne({where:{id}})
     if(!one_project) throw new NotFoundException("Project not found")
-    const newDevice=await this.deviceModel.create({...body,projectId:one_project[0].id,index,createdAt:new Date()})
+    const newDevice=await this.deviceModel.create({...body,projectId:one_project.id,index,createdAt:new Date()})
     await this.deviceModel.save(newDevice)
     // Access the projects associated with the use
     return newDevice

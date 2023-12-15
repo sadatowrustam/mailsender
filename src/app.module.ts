@@ -7,11 +7,12 @@ import { ProjectsModule } from './projects/projects.module';
 import { Projects } from './models/Projects';
 import { Users } from './models/User';
 import { Phones } from './models/Phones';
-import { WebsocketsGateway } from './websockets.gateway';
 import { UsersModule } from './users/users.module';
 import { Templates } from './models/Templates';
 import { MailsModule } from './mails/mails.module';
 import { MessagesModule } from './messages/messages.module';
+import { CorsMiddleware } from './cors.middleware';
+import { ChatGateway } from './chat/chat.gateway';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -31,6 +32,6 @@ import { MessagesModule } from './messages/messages.module';
     MailsModule,
     MessagesModule,
   ],
-  providers: [WebsocketsGateway],
+  providers: [CorsMiddleware, ChatGateway],
 })
 export class AppModule {}

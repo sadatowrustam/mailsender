@@ -1,13 +1,26 @@
 /* eslint-disable prettier/prettier */
-import { Inject, Injectable } from '@nestjs/common';
-import { WebsocketsGateway } from '../websockets.gateway';
+import {  Global, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ChatGateway } from 'src/chat/chat.gateway';
+import { Phones } from 'src/models/Phones';
+import { Repository } from 'typeorm';
 
+@Global()
 @Injectable()
 export class MessagesService {
-    constructor(@Inject(WebsocketsGateway) private readonly websocket:WebsocketsGateway){}
-
+    constructor(
+        private chatService:ChatGateway,
+        @InjectRepository(Phones) private deviceModel:Repository<Phones>
+        ){}
     async sendMessage(body:any){
-        this.websocket.server.emit("message","This is message")
-        return body
+        const device=await this.deviceModel.findOneBy({index:body.index})        
+        if(!device) throw new NotFoundException("Device not found")
+        return this.chatService.handleMessage(body,device.socketId)
+        // return this.chatService.handleMessage(body,"index")
+    }
+    async newSocketId(index:string){
+        const device=await this.deviceModel.findOne({where:{index}})
+        console.log(device)
+        return true
     }
 }
