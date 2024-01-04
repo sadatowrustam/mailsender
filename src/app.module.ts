@@ -13,6 +13,7 @@ import { MailsModule } from './mails/mails.module';
 import { MessagesModule } from './messages/messages.module';
 import { CorsMiddleware } from './cors.middleware';
 import { ChatGateway } from './chat/chat.gateway';
+import { Logs } from './models/Logs';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -23,7 +24,7 @@ import { ChatGateway } from './chat/chat.gateway';
       password: 'kuwat2009',
       database: 'mailsender',
       synchronize: true,
-      entities: [Admin, Projects, Users, Phones, Templates],
+      entities: [Admin, Projects, Users, Phones, Templates, Logs],
     }),
     AdminModule,
     ConfigModule.forRoot({ isGlobal: true }),
