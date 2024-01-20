@@ -16,24 +16,26 @@ export class JwtStrategy extends PassportStrategy(
 ) {
   constructor(
     config: ConfigService,
-    @InjectRepository(Users) private adminModel: Repository<Users>,
+    @InjectRepository(Users) private userModel: Repository<Users>,
 
   ) {
     super({
       jwtFromRequest:
         ExtractJwt.fromAuthHeaderAsBearerToken(),
         _secretOrKey: config.get('JWT_SECRET'),
-      get secretOrKey() {
+        get secretOrKey() {
+          console.log('secretOrKey', config.get('JWT_SECRET'))
           return this._secretOrKey;
-      },
-      set secretOrKey(value) {
+        },
+        set secretOrKey(value) {
           this._secretOrKey = value;
       },
     });
   }
 
   async validate(payload: any) {
-    const user=await this.adminModel.findOneBy({username:payload.id})
+    console.log(payload,"users")
+    const user=await this.userModel.findOneBy({username:payload.id})
     return user;
   }
 }

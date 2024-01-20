@@ -13,7 +13,6 @@ export class TemplatesService {
     console.log(body)
     const new_template=await this.templateModel.create({...body,createdAt:new Date(),user});
     await this.templateModel.save(new_template)
-    console.log(new_template)
     return new_template;
   }
   async getTemplates(userId:number){

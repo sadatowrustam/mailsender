@@ -7,7 +7,7 @@ import { Admin } from '../models/Admin';
 import { Users } from '../models/User';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import { JwtStrategy } from './strategy';
+import { JwtStrategy } from 'src/jwt-strategy/admin.jwt.strategy';
 import { ProjectsModule } from 'src/projects/projects.module';
 import { UserService } from './services/user.service';
 import { UserController } from './controllers/user.controller';
@@ -20,6 +20,5 @@ import { UserController } from './controllers/user.controller';
     ConfigModule,
     ProjectsModule
   ]
-  
 })
 export class AdminModule {}

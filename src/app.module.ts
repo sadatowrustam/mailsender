@@ -14,6 +14,8 @@ import { MessagesModule } from './messages/messages.module';
 import { CorsMiddleware } from './cors.middleware';
 import { ChatGateway } from './chat/chat.gateway';
 import { Logs } from './models/Logs';
+import { BlacklistModule } from './blacklist/blacklist.module';
+import { Blacklist } from './models/Blacklist';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -24,7 +26,7 @@ import { Logs } from './models/Logs';
       password: 'kuwat2009',
       database: 'mailsender',
       synchronize: true,
-      entities: [Admin, Projects, Users, Phones, Templates, Logs],
+      entities: [Admin, Projects, Users, Phones, Templates, Logs, Blacklist],
     }),
     AdminModule,
     ConfigModule.forRoot({ isGlobal: true }),
@@ -32,6 +34,7 @@ import { Logs } from './models/Logs';
     UsersModule,
     MailsModule,
     MessagesModule,
+    BlacklistModule,
   ],
   providers: [CorsMiddleware, ChatGateway],
 })

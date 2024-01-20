@@ -5,12 +5,13 @@ import { MailsService } from './mails.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Projects } from 'src/models/Projects';
 import { Templates } from 'src/models/Templates';
+import { Logs } from 'src/models/Logs';
 
 @Module({
   controllers: [MailsController],
   providers: [MailsService],
   imports:[
-    TypeOrmModule.forFeature([Projects,Templates])
+    TypeOrmModule.forFeature([Projects,Templates,Logs])
   ]
 })
 export class MailsModule {}

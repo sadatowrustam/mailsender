@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller,  Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
-import { JwtGuard } from '../guard';
-import { GetUser } from 'src/admin/decorator';
+import { JwtGuard } from 'src/users/guard';
+import { GetUser } from 'src/users/decorator';
 import { TemplatesService } from '../services/template.service';
 
 @Controller('users/templates')

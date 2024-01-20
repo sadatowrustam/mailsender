@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
-import { JwtGuard } from '../guard';
-import { GetUser } from 'src/admin/decorator';
+import { JwtGuard } from 'src/users/guard';
+import { GetUser } from 'src/users/decorator';
 
 @Controller('users')
 export class UsersController {

@@ -5,17 +5,28 @@ import { Projects } from 'src/models/Projects';
 import { Templates } from 'src/models/Templates';
 import * as nodemailer from "nodemailer";
 import { Repository } from 'typeorm';
+import { Logs } from 'src/models/Logs';
 @Injectable()
 export class MailsService {
     constructor(
         @InjectRepository(Projects) private projectModel:Repository<Projects>,
-        @InjectRepository(Templates) private templateModel:Repository<Templates>
+        @InjectRepository(Templates) private templateModel:Repository<Templates>,
+        @InjectRepository(Logs) private logsModel:Repository<Logs>
         ){}
     async sendMail(body:any){
+        let newLog
         const project=await this.projectModel.findOneBy({index:body.index})
-        if(!project) throw new NotFoundException("Project not found")
+        if(!project) {
+            newLog=await this.logsModel.create({method:"POST",url:"http://192.168.57.9:5012/messsages",status:404,createdAt:new Date()})
+            await this.logsModel.save(newLog)
+            throw new NotFoundException("Project not found")
+        }
         const template=await this.templateModel.findOneBy({id:body.id})
-        if(!template) throw new NotFoundException("Template not found")
+        if(!template) {
+            newLog=await this.logsModel.create({method:"POST",url:"http://192.168.57.9:5012/messsages",status:404,createdAt:new Date()})
+            await this.logsModel.save(newLog)
+            throw new NotFoundException("Template not found")
+        }
         let text=template.template
         if(body.regex){
             const regex=JSON.parse(body.regex)
@@ -41,6 +52,8 @@ export class MailsService {
             html:text,
         };
         await transporter.sendMail(mailOptions);
+        newLog=await this.logsModel.create({method:"POST",url:"http://192.168.57.9:5012/messsages",status:200,createdAt:new Date()})
+        await this.logsModel.save(newLog)
         return "Sucess"
     }
 }

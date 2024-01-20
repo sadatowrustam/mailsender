@@ -8,6 +8,7 @@ import {
   Strategy,
 } from 'passport-jwt';
 import { Admin } from 'src/models/Admin';
+import { Users } from 'src/models/User';
 import { Repository } from 'typeorm';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(
@@ -17,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(
   constructor(
     config: ConfigService,
     @InjectRepository(Admin) private adminModel: Repository<Admin>,
-
+    @InjectRepository(Users) private usersModel: Repository<Users>
   ) {
     super({
       jwtFromRequest:
@@ -33,7 +34,9 @@ export class JwtStrategy extends PassportStrategy(
   }
 
   async validate(payload: any) {
-    const user=await this.adminModel.findOneBy({username:payload.id})
-    return user;
+    const admin=await this.adminModel.findOneBy({username:payload.id})
+    const user=await  this.usersModel.findOneBy({username:payload.id})
+    if(admin!=null) return admin
+    if(user!=null) return user;
   }
 }

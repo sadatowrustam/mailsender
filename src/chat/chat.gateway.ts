@@ -26,7 +26,6 @@ export class ChatGateway {
   handleMessage(message: string,id:string) {
     console.log(this.devices,id)
     this.server.to(this.devices[id]).emit("send-message",message)
-    console.log("handled")
     return "sucess"
   }
   

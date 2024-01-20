@@ -6,6 +6,8 @@ export class Logs{
     @PrimaryGeneratedColumn()
     id:number
     @Column()
+    ip:string
+    @Column()
     method:string
     @Column({nullable:true})
     url:string
